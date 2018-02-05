@@ -52,25 +52,30 @@ class App extends Component {
     let usersLink = <Link onClick={() => this.changeTab("users")} className="navItemContent" to="/users">Users</Link>;
     let todosLink = <Link onClick={() => this.changeTab("todos")} className="navItemContent" to="/todos">Todos</Link>
 
+    let homeStyle = "navItemContent";
+    let usersStyle = "navItemContent";
+    let todosStyle = "navItemContent";
+    
     if (this.state.selectedTab === "home") {
-      homeLink = <Link onClick={() => this.changeTab("home")} className="navItemContent clickedNav" to="/">Home</Link>;
+      homeStyle = "navItemContent clickedNav"
     } else if (this.state.selectedTab === "users") {
-      usersLink = <Link onClick={() => this.changeTab("users")} className="navItemContent clickedNav" to="/users">Users</Link>;
+      usersStyle = "navItemContent clickedNav"
     } else if (this.state.selectedTab === "todos") {
-      todosLink = <Link onClick={() => this.changeTab("todos")} className="navItemContent clickedNav" to="/todos">Todos</Link>;
+      todosStyle = "navItemContent clickedNav"
     }
+
     return (
       <BrowserRouter>
         <div className="App">
           <div className="navigation">
             <li className="navItem">
-              {homeLink}
+              <Link onClick={() => this.changeTab("home")} className={homeStyle} to="/">Home</Link>
             </li>
             <li className="navItem">
-              {usersLink}
+              <Link onClick={() => this.changeTab("users")} className={usersStyle} to="/users">Users</Link>
             </li>
             <li className="navItem">
-              {todosLink}
+              <Link onClick={() => this.changeTab("todos")} className={todosStyle} to="/todos">Todos</Link>
             </li>
           </div>
           <Route exact path="/" component={Home} />
