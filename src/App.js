@@ -48,10 +48,6 @@ class App extends Component {
 
   render() {
 
-    let homeLink = <Link onClick={() => this.changeTab("home")} className="navItemContent" to="/">Home</Link>;
-    let usersLink = <Link onClick={() => this.changeTab("users")} className="navItemContent" to="/users">Users</Link>;
-    let todosLink = <Link onClick={() => this.changeTab("todos")} className="navItemContent" to="/todos">Todos</Link>
-
     let homeStyle = "navItemContent";
     let usersStyle = "navItemContent";
     let todosStyle = "navItemContent";
