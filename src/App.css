@@ -1,18 +1,17 @@
 .App {
   padding: 20px;
   height: 100vh;
-  background-color: #e6e6e6;
+  background-color: #F2F2F2;
 }
 .homeTextContainer {
-  font-size: 60px;
+  font-size: 67px;
   word-wrap: normal;
-  width: 300px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  color: #e6e6e6;
+  width: 280px;
+  height: 230px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #F8F8F8;
+  color: #E1E1E1;
 }
 
 .homeScreen {
@@ -20,4 +19,42 @@
   justify-content: center;
   align-items: center;
   height: 80vh;
+}
+
+.usersScreen {
+  padding: 20px
+}
+
+.todosScreen {
+  padding: 20px;
+}
+
+.navItem {
+  float: left;
+  border-radius: 40px;
+}
+
+.navItem:hover {
+  background-color: aqua;
+}
+
+.navItemContent {
+  display: block;
+  padding: 15px;
+  color: black;
+  text-decoration: none;
+}
+
+
+
+.navigation {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.clickedNav {
+  background-color: #E1E1E1;
+  border-radius: 40px;;
 }

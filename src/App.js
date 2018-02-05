@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import './ui-toolkit/css/nm-cx/main.css';
+//import './ui-toolkit/css/nm-cx/main.css';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 
 const Home = (props) => (
@@ -12,40 +12,70 @@ const Home = (props) => (
 )
 
 const Users = (props) => (
-  <div className="homeScreen">
-    <div className="homeTextContainer">
-      Users
-    </div>
+  <div className="">
+    <ul>
+      <li>User 1</li>
+      <li>User 2</li>
+      <li>User 3</li>
+      <li>User 4</li>
+    </ul>
   </div>
 )
 
 const Todos = (props) => (
-  <div className="homeScreen">
-    <div className="homeTextContainer">
-      Todos
-    </div>
+  <div className="">
+    <ul>
+      <li>Todo 1</li>
+      <li>Todo 2</li>
+      <li>Todo 3</li>
+      <li>Todo 4</li>
+    </ul>
   </div>
 )
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTab: "home"
+    }
+    this.changeTab = this.changeTab.bind(this);
+  }
+
+  changeTab(tabName) {
+    this.setState({selectedTab: tabName})
+  }
+
   render() {
+
+    let homeLink = <Link onClick={() => this.changeTab("home")} className="navItemContent" to="/">Home</Link>;
+    let usersLink = <Link onClick={() => this.changeTab("users")} className="navItemContent" to="/users">Users</Link>;
+    let todosLink = <Link onClick={() => this.changeTab("todos")} className="navItemContent" to="/todos">Todos</Link>
+
+    if (this.state.selectedTab === "home") {
+      homeLink = <Link onClick={() => this.changeTab("home")} className="navItemContent clickedNav" to="/">Home</Link>;
+    } else if (this.state.selectedTab === "users") {
+      usersLink = <Link onClick={() => this.changeTab("users")} className="navItemContent clickedNav" to="/users">Users</Link>;
+    } else if (this.state.selectedTab === "todos") {
+      todosLink = <Link onClick={() => this.changeTab("todos")} className="navItemContent clickedNav" to="/todos">Todos</Link>;
+    }
     return (
       <BrowserRouter>
         <div className="App">
-          <ul className="filter-nav">
-            <li className="filter-nav-entry">
-            <button><Link to="/">Home</Link></button>
+          <div className="navigation">
+            <li className="navItem">
+              {homeLink}
             </li>
-            <li className="filter-nav-entry">
-              <button><Link to="/users">Users</Link></button>
+            <li className="navItem">
+              {usersLink}
             </li>
-            <li className="filter-nav-entry">
-            <button><Link to="/todos">Todos</Link></button>
+            <li className="navItem">
+              {todosLink}
             </li>
-          </ul>
+          </div>
           <Route exact path="/" component={Home} />
-          <Route exact path="/users" component={Users} />
-          <Route exact path="/todos" component={Todos} />
+          <Route path="/users" component={Users} />
+          <Route path="/todos" component={Todos} />
         </div>
       </BrowserRouter>
     );
