@@ -79,9 +79,7 @@ const NavBar = props => {
   } else if (props.location.pathname.includes("/todos")) {
     todosStyle = "navItemContent clickedNav"
   }
-
-  console.log(props.location.pathname)
-
+  
   return (
     <div className="navigation">
       <li className="navItem">
