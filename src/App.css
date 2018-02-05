@@ -58,3 +58,11 @@
   background-color: #E1E1E1;
   border-radius: 40px;;
 }
+
+.listItem {
+  padding: 5px;
+}
+
+.selectedListItem {
+  color: #E1E1E1;
+}

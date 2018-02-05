@@ -14,10 +14,10 @@ const Home = (props) => (
 const Users = (props) => (
   <div className="">
     <ul>
-      <li>User 1</li>
-      <li>User 2</li>
-      <li>User 3</li>
-      <li>User 4</li>
+      <li className="listItem selectedListItem">User 1</li>
+      <li className="listItem">User 2</li>
+      <li className="listItem">User 3</li>
+      <li className="listItem">User 4</li>
     </ul>
   </div>
 )
@@ -25,10 +25,10 @@ const Users = (props) => (
 const Todos = (props) => (
   <div className="">
     <ul>
-      <li>Todo 1</li>
-      <li>Todo 2</li>
-      <li>Todo 3</li>
-      <li>Todo 4</li>
+      <li className="listItem selectedListItem">Todo 1</li>
+      <li className="listItem">Todo 2</li>
+      <li className="listItem">Todo 3</li>
+      <li className="listItem">Todo 4</li>
     </ul>
   </div>
 )
