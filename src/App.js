@@ -100,7 +100,6 @@ const NavBar = props => {
 const App = props =>  (
       <BrowserRouter>
         <div className="App">
-          
           <Route path='/' component={NavBar} />
           <Route exact path="/" component={Home} />
           <Route path="/users" component={Users} />
