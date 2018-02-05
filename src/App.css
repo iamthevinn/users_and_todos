@@ -1,3 +1,23 @@
 .App {
-  padding: 20px
+  padding: 20px;
+  height: 100vh;
+  background-color: #e6e6e6;
+}
+.homeTextContainer {
+  font-size: 60px;
+  word-wrap: normal;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: #e6e6e6;
+}
+
+.homeScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 }
