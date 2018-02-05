@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 //import './ui-toolkit/css/nm-cx/main.css';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
@@ -33,7 +33,7 @@ const Users = props => {
     <div className="userDisplay">
       <div className="listOfItems">
         <ul>
-          {users.map((user,index) => (<li key={index + user} className="lineStyle"><Link className={props.location.pathname.includes(user) ? "listItem selectedListItem" : "listItem"} to={"/users/" + user}>{user}</Link></li>))}
+          {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link className={props.location.pathname.includes(user) ? "listItem selectedListItem" : "listItem"} to={"/users/" + user}>{user}</Link></li>))}
         </ul>
       </div>
       <Route path='/users/:name' component={User} />
@@ -59,7 +59,7 @@ const Todos = props => {
     <div className="userDisplay">
       <div className="listOfItems">
         <ul>
-          {todos.map((todo,index) => (<li key={index + todo} className="lineStyle"><Link className={props.location.pathname.includes(todo) ? "listItem selectedListItem" : "listItem"} to={"/todos/" + todo}>{todo}</Link></li>))}
+          {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link className={props.location.pathname.includes(todo) ? "listItem selectedListItem" : "listItem"} to={"/todos/" + todo}>{todo}</Link></li>))}
         </ul>
       </div>
       <Route path='/todos/:todoItem' component={Todo} />
@@ -67,54 +67,46 @@ const Todos = props => {
   )
 }
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: "home"
-    }
-    this.changeTab = this.changeTab.bind(this);
+const NavBar = props => {
+  let homeStyle = "navItemContent";
+  let usersStyle = "navItemContent";
+  let todosStyle = "navItemContent";
+
+  if (props.location.pathname === "/") {
+    homeStyle = "navItemContent clickedNav"
+  } else if (props.location.pathname.includes("/users")) {
+    usersStyle = "navItemContent clickedNav"
+  } else if (props.location.pathname.includes("/todos")) {
+    todosStyle = "navItemContent clickedNav"
   }
 
-  changeTab(tabName) {
-    this.setState({ selectedTab: tabName })
-  }
+  console.log(props.location.pathname)
 
-  render() {
+  return (
+    <div className="navigation">
+      <li className="navItem">
+        <Link className={homeStyle} to="/">Home</Link>
+      </li>
+      <li className="navItem">
+        <Link className={usersStyle} to="/users">Users</Link>
+      </li>
+      <li className="navItem">
+        <Link className={todosStyle} to="/todos">Todos</Link>
+      </li>
+    </div>
+  )
+}
 
-    let homeStyle = "navItemContent";
-    let usersStyle = "navItemContent";
-    let todosStyle = "navItemContent";
-
-    if (this.state.selectedTab === "home") {
-      homeStyle = "navItemContent clickedNav"
-    } else if (this.state.selectedTab === "users") {
-      usersStyle = "navItemContent clickedNav"
-    } else if (this.state.selectedTab === "todos") {
-      todosStyle = "navItemContent clickedNav"
-    }
-
-    return (
+const App = props =>  (
       <BrowserRouter>
         <div className="App">
-          <div className="navigation">
-            <li className="navItem">
-              <Link onClick={() => this.changeTab("home")} className={homeStyle} to="/">Home</Link>
-            </li>
-            <li className="navItem">
-              <Link onClick={() => this.changeTab("users")} className={usersStyle} to="/users">Users</Link>
-            </li>
-            <li className="navItem">
-              <Link onClick={() => this.changeTab("todos")} className={todosStyle} to="/todos">Todos</Link>
-            </li>
-          </div>
+          
+          <Route path='/' component={NavBar} />
           <Route exact path="/" component={Home} />
           <Route path="/users" component={Users} />
           <Route path="/todos" component={Todos} />
         </div>
       </BrowserRouter>
     );
-  }
-}
 
 export default App;
