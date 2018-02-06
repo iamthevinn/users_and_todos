@@ -33,18 +33,16 @@ const User = props => {
   return returnUser
 }
 
-const Users = props => {
-  return (
-    <div className="userDisplay">
-      <div className="listOfItems">
-        <ul>
-          {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link className={props.location.pathname === "/users/" + user ? "listItem selectedListItem" : "listItem"} to={"/users/" + user}>{user}</Link></li>))}
-        </ul>
-      </div>
-      <Route path='/users/:name' component={User} />
+const Users = props => (
+  <div className="userDisplay">
+    <div className="listOfItems">
+      <ul>
+        {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link className={props.location.pathname === "/users/" + user ? "listItem selectedListItem" : "listItem"} to={"/users/" + user}>{user}</Link></li>))}
+      </ul>
     </div>
-  )
-}
+    <Route path='/users/:name' component={User} />
+  </div>
+)
 
 const Todo = props => {
   const returnTodo = todos.includes(props.match.params.todoItem) ? (<div className="itemDescriptionContainer">
@@ -64,18 +62,16 @@ const Todo = props => {
   return returnTodo
 }
 
-const Todos = props => {
-  return (
-    <div className="userDisplay">
-      <div className="listOfItems">
-        <ul>
-          {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link className={props.location.pathname === "/todos/" + todo ? "listItem selectedListItem" : "listItem"} to={"/todos/" + todo}>{todo}</Link></li>))}
-        </ul>
-      </div>
-      <Route path='/todos/:todoItem' component={Todo} />
+const Todos = props => (
+  <div className="userDisplay">
+    <div className="listOfItems">
+      <ul>
+        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link className={props.location.pathname === "/todos/" + todo ? "listItem selectedListItem" : "listItem"} to={"/todos/" + todo}>{todo}</Link></li>))}
+      </ul>
     </div>
-  )
-}
+    <Route path='/todos/:todoItem' component={Todo} />
+  </div>
+)
 
 const NavBar = props => {
   let homeStyle = "navItemContent";
