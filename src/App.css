@@ -94,3 +94,8 @@
 .lineStyle {
   padding: 5px;
 }
+
+li {
+  color:black;
+  text-decoration: none;
+}
