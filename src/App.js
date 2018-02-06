@@ -1,18 +1,28 @@
 import React from 'react';
 import './ui-toolkit/css/nm-cx/main.css';
 import './App.css';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import withRouter from 'react-router-dom/withRouter';
 
 const DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 const users = ["Vince", "Bruce", "Sam", "Joe"]
 const todos = ["Users and Todos", "Ghibli App", "Dojo Dossier", "Voting App II"]
 
-const NmTab = ({exact, to, tabName}) => {
+const LocationDisplay = withRouter((props) => {
+  console.log(props)
+  return (<div style={{ width: '100px', margin: '50px' }}>
+    <button onClick={() => props.history.push('/')}>Go Home</button>
+  </div>
+  )
+})
+
+const NmTab = ({ exact, to, tabName }) => {
   return (
-    <Route exact={exact} path={to} children={({match}) => {
+    <Route exact={exact} path={to} children={({ match }) => {
       return (
         <li className={`tab-title ${match ? 'active' : ''}`} ><Link to={to}>{tabName}</Link></li>
-      )}
+      )
+    }
     } />
   )
 }
@@ -20,9 +30,9 @@ const NmTab = ({exact, to, tabName}) => {
 const ButtonGroup = props => (
   <nav>
     <ul className="tabs">
-      <NmTab exact={true} to={"/"} tabName="Home" />
-      <NmTab to={"/users"} tabName="Users" />
-      <NmTab to={"/todos"} tabName="Todos" />
+      <NmTab exact={true} to="/" tabName="Home" />
+      <NmTab to="/users" tabName="Users" />
+      <NmTab to="/todos" tabName="Todos" />
     </ul>
   </nav>
 )
@@ -57,10 +67,11 @@ const Users = props => (
   <div className="userDisplay">
     <div className="listOfItems">
       <ul>
-        {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link style={props.location.pathname === "/users/" + user ? {color: '#E1E1E1', textDecoration: 'none'} : {color: 'black', textDecoration: 'none'}} to={"/users/" + user}>{user}</Link></li>))}
+        {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link style={props.location.pathname === "/users/" + user ? { color: '#E1E1E1', textDecoration: 'none' } : { color: 'black', textDecoration: 'none' }} to={"/users/" + user}>{user}</Link></li>))}
       </ul>
     </div>
     <Route path='/users/:name' component={User} />
+    <LocationDisplay />
   </div>
 )
 
@@ -86,20 +97,41 @@ const Todos = props => (
   <div className="userDisplay">
     <div className="listOfItems">
       <ul>
-        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link style={props.location.pathname === "/todos/" + todo ? {color: '#E1E1E1', textDecoration: 'none'} : {color: 'black', textDecoration: 'none'}} to={"/todos/" + todo}>{todo}</Link></li>))}
+        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link style={props.location.pathname === "/todos/" + todo ? { color: '#E1E1E1', textDecoration: 'none' } : { color: 'black', textDecoration: 'none' }} to={"/todos/" + todo}>{todo}</Link></li>))}
       </ul>
     </div>
     <Route path='/todos/:todoItem' component={Todo} />
+    <LocationDisplay />
   </div>
 )
 
+const DynamicContent = ({ match }) => {
+  console.log(match)
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="card" style={{ width: '400px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div>No page found at the path: {match.url}</div>
+          </div>
+        </div>
+
+      </div>
+      <LocationDisplay />
+    </div>
+  )
+}
 const App = props => (
   <BrowserRouter>
     <div className="App">
       <ButtonGroup />
-      <Route exact path="/" component={Home} />
-      <Route path="/users" component={Users} />
-      <Route path="/todos" component={Todos} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/users" component={Users} />
+        <Route path="/todos" component={Todos} />
+        <Route path="/:name" component={DynamicContent} />
+      </Switch>
+
     </div>
   </BrowserRouter>
 );

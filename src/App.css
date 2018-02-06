@@ -4,7 +4,7 @@
   background-color: #F2F2F2;
 }
 .homeTextContainer {
-  font-size: 67px;
+  font-size: 52px;
   word-wrap: normal;
   width: 280px;
   height: 230px;
@@ -71,11 +71,11 @@
 }
 
 .listOfItems {
-  height: 50%;
+  padding-bottom: 30px;
 }
 
 .userDisplay {
-  height: 100%;
+  height: 90%;
 }
 
 .itemDescriptionContainer {
