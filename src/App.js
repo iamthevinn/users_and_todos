@@ -16,16 +16,21 @@ const Home = (props) => (
 )
 
 const User = props => {
-  return (
-    <div className="itemDescriptionContainer">
-      <div className="itemName">
-        {props.match.params.name}
-      </div>
-      <div className="itemDescription">
-        {DESCRIPTION}
-      </div>
+  const returnUser = users.includes(props.match.params.name) ? (<div className="itemDescriptionContainer">
+    <div className="itemName">
+      {props.match.params.name}
     </div>
-  )
+    <div className="itemDescription">
+      {DESCRIPTION}
+    </div>
+  </div>
+  ) : (<div className="itemDescriptionContainer">
+    <div className="itemName">
+      {`No Such User. ${props.match.params.name} not found.`}
+    </div>
+  </div>)
+
+  return returnUser
 }
 
 const Users = props => {
@@ -42,16 +47,21 @@ const Users = props => {
 }
 
 const Todo = props => {
-  return (
-    <div className="itemDescriptionContainer">
-      <div className="itemName">
-        {props.match.params.todoItem}
-      </div>
-      <div className="itemDescription">
-        {DESCRIPTION}
-      </div>
+  const returnTodo = todos.includes(props.match.params.todoItem) ? (<div className="itemDescriptionContainer">
+    <div className="itemName">
+      {props.match.params.todoItem}
     </div>
-  )
+    <div className="itemDescription">
+      {DESCRIPTION}
+    </div>
+  </div>
+  ) : (<div className="itemDescriptionContainer">
+    <div className="itemName">
+      {`No Such Todo. ${props.match.params.todoItem} not found.`}
+    </div>
+  </div>)
+
+  return returnTodo
 }
 
 const Todos = props => {
@@ -81,29 +91,31 @@ const NavBar = props => {
   }
 
   return (
-    <div className="navigation">
-      <li className="navItem">
-        <Link className={homeStyle} to="/">Home</Link>
-      </li>
-      <li className="navItem">
-        <Link className={usersStyle} to="/users">Users</Link>
-      </li>
-      <li className="navItem">
-        <Link className={todosStyle} to="/todos">Todos</Link>
-      </li>
+    <div>
+      <div className="navigation">
+        <li className="navItem">
+          <Link className={homeStyle} to="/">Home</Link>
+        </li>
+        <li className="navItem">
+          <Link className={usersStyle} to="/users">Users</Link>
+        </li>
+        <li className="navItem">
+          <Link className={todosStyle} to="/todos">Todos</Link>
+        </li>
+      </div>
+      <Route exact path="/" component={Home} />
+      <Route path="/users" component={Users} />
+      <Route path="/todos" component={Todos} />
     </div>
   )
 }
 
-const App = props =>  (
-      <BrowserRouter>
-        <div className="App">
-          <Route path='/' component={NavBar} />
-          <Route exact path="/" component={Home} />
-          <Route path="/users" component={Users} />
-          <Route path="/todos" component={Todos} />
-        </div>
-      </BrowserRouter>
-    );
+const App = props => (
+  <BrowserRouter>
+    <div className="App">
+      <Route path='/' component={NavBar} />
+    </div>
+  </BrowserRouter>
+);
 
 export default App;
