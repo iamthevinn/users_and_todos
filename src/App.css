@@ -31,13 +31,15 @@
 
 .navItem {
   float: left;
+  text-align: center;
+  width: 140px;
   border-radius: 40px;
 }
-
+/*
 .navItem:hover {
   background-color: aqua;
 }
-
+*/
 .navItemContent {
   display: block;
   padding: 15px;
