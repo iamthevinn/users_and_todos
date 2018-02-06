@@ -73,38 +73,25 @@ const Todos = props => (
   </div>
 )
 
-const NavBar = props => {
-  let homeStyle = "navItemContent";
-  let usersStyle = "navItemContent";
-  let todosStyle = "navItemContent";
-
-  if (props.location.pathname === "/") {
-    homeStyle = "navItemContent clickedNav"
-  } else if (props.location.pathname.startsWith("/users")) {
-    usersStyle = "navItemContent clickedNav"
-  } else if (props.location.pathname.startsWith("/todos")) {
-    todosStyle = "navItemContent clickedNav"
-  }
-
-  return (
-    <div>
-      <div className="navigation">
-        <li className="navItem">
-          <Link className={homeStyle} to="/">Home</Link>
-        </li>
-        <li className="navItem">
-          <Link className={usersStyle} to="/users">Users</Link>
-        </li>
-        <li className="navItem">
-          <Link className={todosStyle} to="/todos">Todos</Link>
-        </li>
-      </div>
-      <Route exact path="/" component={Home} />
-      <Route path="/users" component={Users} />
-      <Route path="/todos" component={Todos} />
+const NavBar = props => (
+  <div>
+    <div className="navigation">
+      <li className="navItem">
+        <Link className={props.location.pathname === "/" ? "navItemContent clickedNav" : "navItemContent"} to="/">Home</Link>
+      </li>
+      <li className="navItem">
+        <Link className={props.location.pathname.startsWith("/users") ? "navItemContent clickedNav" : "navItemContent"} to="/users">Users</Link>
+      </li>
+      <li className="navItem">
+        <Link className={props.location.pathname.startsWith("/todos") ? "navItemContent clickedNav" : "navItemContent"} to="/todos">Todos</Link>
+      </li>
     </div>
-  )
-}
+    <Route exact path="/" component={Home} />
+    <Route path="/users" component={Users} />
+    <Route path="/todos" component={Todos} />
+  </div>
+)
+
 
 const App = props => (
   <BrowserRouter>
