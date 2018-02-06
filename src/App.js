@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import './ui-toolkit/css/nm-cx/main.css';
+import './App.css';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 
 const DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -57,7 +57,7 @@ const Users = props => (
   <div className="userDisplay">
     <div className="listOfItems">
       <ul>
-        {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link className={props.location.pathname === "/users/" + user ? "listItem selectedListItem" : "listItem"} to={"/users/" + user}>{user}</Link></li>))}
+        {users.map((user, index) => (<li key={index + user} className="lineStyle"><Link style={props.location.pathname === "/users/" + user ? {color: '#E1E1E1', textDecoration: 'none'} : {color: 'black', textDecoration: 'none'}} to={"/users/" + user}>{user}</Link></li>))}
       </ul>
     </div>
     <Route path='/users/:name' component={User} />
@@ -86,7 +86,7 @@ const Todos = props => (
   <div className="userDisplay">
     <div className="listOfItems">
       <ul>
-        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link className={props.location.pathname === "/todos/" + todo ? "listItem selectedListItem" : "listItem"} to={"/todos/" + todo}>{todo}</Link></li>))}
+        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link style={props.location.pathname === "/todos/" + todo ? {color: '#E1E1E1', textDecoration: 'none'} : {color: 'black', textDecoration: 'none'}} to={"/todos/" + todo}>{todo}</Link></li>))}
       </ul>
     </div>
     <Route path='/todos/:todoItem' component={Todo} />
