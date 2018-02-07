@@ -139,14 +139,24 @@ const Todo = props => {
 const Todos = props => {
   console.log("inTodos")
   console.log(props)
+
+  let flatTodos = [];
+
+  for (let userIterater = 0; userIterater < props.users.length; userIterater++) {
+    for (let todoIterater = 0; todoIterater < props.users[userIterater].todos.length; todoIterater++) {
+      flatTodos.push(props.users[userIterater].todos[todoIterater] + " - " + props.users[userIterater].name)
+    }
+  }
+
+  
+
   return (
     <Route exact={props.exact} path={props.to} render={({ match }) => {
       return (
         <div className="pageDisplay">
           <div className="listOfItems">
             <ul>
-              {props.users.map((user, index) => (user.todos.map(todo,index) => (<li key={index + user} className="lineStyle"><div>{user.todos}</div></li>) ))
-              )}
+              {flatTodos.map((todos, index) => <li key={index} className="lineStyle"><div>{todos}</div></li>)}
             </ul>
           </div>
           
