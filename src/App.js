@@ -47,10 +47,9 @@ const NmTab = ({ exact, to, tabName }) => {
 
 const TodoInput = props => (
   <div className="row" style={{ height: '50px' }}>
-    <p>{props.todoInputText}</p>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} className="small-2 medium-2 large-2 columns">Add Todo</div>
     <div className="small-4 medium-4 large-4 columns">
-      <input type="text" placeholder="Todo" value={props.todoInputText} onChange={(e) => props.updateTodoInputText(e,props.userIndex)} />
+      <input type="text" placeholder="Todo" value={props.todoInputText} onChange={(e) => props.updateTodoInputText(e, props.userIndex)} />
     </div>
     <div className="small-6 medium-6 large-6 columns">
       <button onClick={() => props.addTodo(props.userIndex)}>Add Todo</button>
@@ -68,7 +67,13 @@ const User = props => {
             <div className="userTodoName">
               {props.users[match.params.index].name}
             </div>
-            <TodoInput selectedUser={props.selectedUser} userIndex={match.params.index} todoInputText={props.users[match.params.index].todoInputText} updateTodoInputText={props.updateTodoInputText} addTodo={props.addTodo}/>
+            <TodoInput userIndex={match.params.index} todoInputText={props.users[match.params.index].todoInputText} updateTodoInputText={props.updateTodoInputText} addTodo={() => props.addTodo(match.params.index)} />
+            <br />
+            <div className="listOfItems">
+              <ul>
+                {props.users[match.params.index].todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><div>{todo}</div></li>))}
+              </ul>
+            </div>
           </div>
         )
       } else
@@ -79,32 +84,33 @@ const User = props => {
 }
 
 const UserInput = props => (
-          <div className="row" style={{ height: '50px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} className="small-2 medium-2 large-2 columns">Add User</div>
-            <div className="small-4 medium-4 large-4 columns">
-              <input type="text" placeholder="User" value={props.userInputText} onChange={props.updateUserInputText} />
-            </div>
-            <div className="small-6 medium-6 large-6 columns">
-              <button onClick={props.addUser}>Add User</button>
-            </div>
-          </div>
+  <div className="row" style={{ height: '50px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }} className="small-2 medium-2 large-2 columns">Add User</div>
+    <div className="small-4 medium-4 large-4 columns">
+      <input type="text" placeholder="User" value={props.userInputText} onChange={props.updateUserInputText} />
+    </div>
+    <div className="small-6 medium-6 large-6 columns">
+      <button onClick={props.addUser}>Add User</button>
+    </div>
+  </div>
 )
 
 const Users = props => {
-  console.log(props)
+  console.log("in users")
   return (
-    <Route exact={props.exact} path={props.to} children={({ match }) => {
+    <Route exact={props.exact} path={props.to} render={({ match }) => {
+      console.log(match)
       return (
-        <div className="userDisplay">
+        <div className="pageDisplay">
           <br />
-            <UserInput userInputText={props.userInputText} addUser={props.addUser} updateUserInputText={props.updateUserInputText} />
+          <UserInput userInputText={props.userInputText} addUser={props.addUser} updateUserInputText={props.updateUserInputText} />
           <br />
           <div className="listOfItems">
             <ul>
-              {props.users.map((user, index) => (<li key={index + user} className="lineStyle"><Link onClick={() => props.userSelected(index)} style={props.location.pathname === "/users/" + index ? { color: '#E1E1E1', textDecoration: 'none' } : { color: 'black', textDecoration: 'none' }} to={"/users/" + index}>{user.name}</Link></li>))}
+              {props.users.map((user, index) => (<li key={index + user} className="lineStyle"><Link style={match.path === "/users/" + index ? { color: '#E1E1E1', textDecoration: 'none' } : { color: 'black', textDecoration: 'none' }} to={"/users/" + index}>{user.name}</Link></li>))}
             </ul>
           </div>
-          <User to='/users/:index' selectedUser={props.selectedUser} todoInputText={props.todoInputText} updateTodoInputText={props.updateTodoInputText} addTodo={props.addTodo} users={props.users} />
+          <User to='/users/:index' todoInputText={props.todoInputText} updateTodoInputText={props.updateTodoInputText} addTodo={props.addTodo} users={props.users} />
         </div>
       )
     }
@@ -130,17 +136,26 @@ const Todo = props => {
   return returnTodo
 }
 
-const Todos = props => (
-  <div className="userDisplay">
-    <div className="listOfItems">
-      <ul>
-        {todos.map((todo, index) => (<li key={index + todo} className="lineStyle"><Link style={props.location.pathname === "/todos/" + todo ? { color: '#E1E1E1', textDecoration: 'none' } : { color: 'black', textDecoration: 'none' }} to={"/todos/" + todo}>{todo}</Link></li>))}
-      </ul>
-    </div>
-    <Route path='/todos/:todoItem' component={Todo} />
-    <LocationDisplay />
-  </div>
-)
+const Todos = props => {
+  console.log("inTodos")
+  console.log(props)
+  return (
+    <Route exact={props.exact} path={props.to} render={({ match }) => {
+      return (
+        <div className="pageDisplay">
+          <div className="listOfItems">
+            <ul>
+              {props.users.map((user, index) => (user.todos.map(todo,index) => (<li key={index + user} className="lineStyle"><div>{user.todos}</div></li>) ))
+              )}
+            </ul>
+          </div>
+          
+        </div>
+      )
+    }
+    } />
+  )
+}
 
 const DynamicContent = ({ match }) => {
   return (
@@ -162,14 +177,12 @@ class App extends Component {
     super(props)
     this.state = {
       userInputText: "",
-      users: [],
-      selectedUser: null
+      users: []
     }
     this.updateUserInputText = this.updateUserInputText.bind(this)
     this.addUser = this.addUser.bind(this)
     this.updateTodoInputText = this.updateTodoInputText.bind(this)
     this.addTodo = this.addTodo.bind(this)
-    this.userSelected = this.userSelected.bind(this)
   }
 
   updateUserInputText(event) {
@@ -178,7 +191,7 @@ class App extends Component {
 
   addUser() {
     let tempArray = this.state.users.slice();
-    const newUser = {name: this.state.userInputText, todos: [], todoInputText: ""}
+    const newUser = { name: this.state.userInputText, todos: [], todoInputText: "" }
     tempArray.push(newUser)
     this.setState({ users: tempArray, userInputText: "" })
   }
@@ -193,13 +206,9 @@ class App extends Component {
 
   addTodo(userIndex) {
     let tempArray = this.state.users.slice();
-    tempArray[userIndex].todos.push(this.state.todoInputText);
+    tempArray[userIndex].todos.push(tempArray[userIndex].todoInputText);
     tempArray[userIndex].todoInputText = "";
     this.setState({ users: tempArray });
-  }
-
-  userSelected(userIndex) {
-    this.setState({selectedUser: userIndex})
   }
 
   render() {
@@ -207,12 +216,9 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <ButtonGroup />
-          <Switch>
             <Route exact path="/" component={Home} />
-            <Users to="/users" selectedUser={this.state.selectedUser} userSelected={this.userSelected} updateTodoInputText={this.updateTodoInputText} addTodo={this.addTodo} addUser={this.addUser} users={this.state.users} userInputText={this.state.userInputText} updateUserInputText={this.updateUserInputText} />
-            <Route path="/todos" component={Todos} />
-            <Route path="/:name" component={DynamicContent} />
-          </Switch>
+            <Users to="/users" updateTodoInputText={this.updateTodoInputText} addTodo={this.addTodo} addUser={this.addUser} users={this.state.users} userInputText={this.state.userInputText} updateUserInputText={this.updateUserInputText} />
+            <Todos to="/todos" users={this.state.users} />
         </div>
       </BrowserRouter>
     )
